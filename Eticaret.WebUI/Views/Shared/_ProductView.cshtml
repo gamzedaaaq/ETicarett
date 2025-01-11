@@ -1,0 +1,42 @@
+﻿@model Product
+<div class="col mb-5">
+    <div class="card h-100 position-relative">
+        <!-- Favori Butonu -->
+        <div class="position-absolute" style="top: 0.5rem; right: 0.5rem; z-index: 10;">
+            <form asp-action="add" asp-controller="Favorites" method="post">
+                <input type="hidden" name="ProductId" value="@Model.Id" />
+                <button type="submit" class="btn p-0" style="background: none; border: none;">
+                    <i class="bi bi-heart text-muted" style="font-size: 1.2rem;"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Ürün Görseli -->
+        <a href="/Products/Details/@Model.Id">
+            <img class="card-img-top" src="~/img/Products/@Model.İmage" alt="@Model.Name">
+        </a>
+
+        <!-- Ürün Detayları -->
+        <div class="card-body p-4">
+            <div class="text-center">
+                <!-- Ürün Adı -->
+                <h5 class="fw-bolder">@Model.Name</h5>
+                <!-- Ürün Fiyatı -->
+                @Model.Price.ToString("c")
+            </div>
+        </div>
+
+        <!-- Ürün Eylemleri -->
+        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <form action="/Cart/Add" method="post" >
+                <input type="hidden" name="ProductId" value="@Model.Id" />
+                <div class="text-center">
+                   
+                    <button class="btn btn-outline-dark mt-auto" type="submit"> <i class="bi-cart-fill me-1"></i>
+                        Sepete Ekle</button>
+                </div>
+                </form>
+           
+        </div>
+    </div>
+</div>

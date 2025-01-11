@@ -1,0 +1,88 @@
+﻿@model CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Satın Al";
+}
+
+<section class="container my-5">
+    <div class="text-center">
+        <h1 class="display-4">Satın Al</h1>
+    </div>
+
+    <div class="row">
+        @if (Model.CartProducts.Any())
+        {
+            <div class="col-md-8">
+                <div class="table-responsive">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <h4> Sepet Toplam</h4>
+                </div>
+                <table>
+                    <tr>
+                        <td>Aratoplam</td>
+                        <td>
+                            @Model.TotalPrice.ToString("c")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kargo Fiyatı</td>
+                        <td>@(Model.TotalPrice > 999 ? "ücretsiz" : Model.CartProducts.Any() ? "99 ₺" : "0")</td>
+                    </tr>
+                    <tr>
+                        <th> Sipariş Özeti</th>
+                        <td>
+                            @(Model.TotalPrice > 999 ? Model.TotalPrice.ToString("c") : Model.CartProducts.Any()
+                                ? Model.TotalPrice + 99 : Model.TotalPrice.ToString("c"))
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Ürün</th>
+                        <th>Fiyat</th>
+                        <th>İşlemler</th>
+                        <th>Miktar</th>
+                        <th>Toplam</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CartProducts)
+                    {
+                        <tr>
+                            <td>
+                                <img src="/img/Products/@item.Product.İmage" alt="@item.Product.Name" height="37" />
+                            </td>
+                            <td>
+                                <a class="nav-link text-dark" href="/Products/Details/@item.Product.Id">
+                                    @item.Product.Name
+                                </a>
+                            </td>
+                            <td>
+                                @item.Product.Price.ToString("c", System.Globalization.CultureInfo.CurrentCulture)
+                            </td>
+                            <td>
+                                @item.Quantity
+                            </td>
+                            <td>
+                                @((item.Quantity * item.Product.Price).ToString("c"))
+                            </td>
+                            
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <h3>Sepetinizde Ürün Bulunmamaktadır</h3>
+            </div>
+        }
+    </div>
+</section>
